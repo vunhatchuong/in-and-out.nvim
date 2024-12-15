@@ -21,9 +21,16 @@ end
 local targets = { '"', "'", "(", ")", "{", "}", "[", "]", "`" }
 
 function M.setup(config)
-	vim.validate("config", config, "table", true)
-	vim.validate("config.targets", config.targets, "table", true)
-	vim.validate("config.additional_targets", config.additional_targets, "table", true)
+	vim.validate({ config = { config, "table" } })
+	vim.validate({
+		["config.targets"] = { config.targets, { "table", "nil" } },
+	})
+	vim.validate({
+		["config.additional_targets"] = {
+			config.additional_targets,
+			{ "table", "nil" },
+		},
+	})
 
 	if config and config.targets then
 		targets = config.targets
